@@ -11,7 +11,7 @@ metadata:
   name: webapp
   namespace: k8s-ns1
   annotations:
-    kubernetes.io/ingress.class: nginx
+    INGRESS.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: test.domain.com
