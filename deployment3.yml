@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom
+  labels:
+    app: prom
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prom
+  template:
+    metadata:
+      labels:
+        app: prom
+    spec:
+      containers:
+      - name: prometheus
+        image: localhost:5000/prom_image22
+        ports:
+        - containerPort: 5000

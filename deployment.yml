@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-grafana3
+  labels:
+    app: prometheus-grafana3
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prometheus-grafana3
+  template:
+    metadata:
+      labels:
+        app: prometheus-grafana3
+    spec:
+      containers:
+      - name: nodetesting1
+        image: prom/node-exporter:latest
+        ports:
+        - containerPort: 9100
+      - name: grafanatesting1
+        image: grafana/grafana:latest
+        ports:
+        - containerPort: 3000
+      - name: promtesting1
+        image: prom/prometheus
+        ports:
+        - containerPort: 9090
