@@ -12,4 +12,11 @@ variable replica_count {}
 variable service_type_port_node_port {}
 variable service_type_port_port {}
 variable service_type_port_target_port {}
+variable job_name {}
+variable job_container_name {}
+variable job_container_image {}
+variable job_commands {
+	type = list
+}
+variable job_backoff_limit {}
 

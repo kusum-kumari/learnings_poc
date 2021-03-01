@@ -79,3 +79,56 @@ resource "kubernetes_ingress" "test" {
   }
 }
 
+resource "kubernetes_job" "perl-job" {
+  metadata {
+    name = var.job_name
+    namespace = kubernetes_namespace.test.metadata.0.name
+  }
+  spec {
+    template {
+      metadata {}
+      spec {
+        container {
+          name    = var.job_container_name
+          image   = var.job_container_image
+          command = var.job_commands
+        }
+        restart_policy = "Never"
+      }
+    }
+    backoff_limit = var.job_backoff_limit
+  }
+  wait_for_completion = true
+}
+
+resource "kubernetes_cron_job" "cron-job" {
+  metadata {
+    name = "cron-job"
+    namespace = kubernetes_namespace.test.metadata.0.name
+  }
+  spec {
+    concurrency_policy            = "Replace"
+    failed_jobs_history_limit     = 5
+    schedule                      = "0 * * * *"
+    starting_deadline_seconds     = 10
+    successful_jobs_history_limit = 10
+    job_template {
+      metadata {}
+      spec {
+        backoff_limit              = 2
+        ttl_seconds_after_finished = 10
+        template {
+          metadata {}
+          spec {
+            container {
+              name    = "hello"
+              image   = "busybox"
+              command = ["/bin/sh", "-c", "date; echo Hello Kusum Kum"]
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

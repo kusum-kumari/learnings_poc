@@ -14,6 +14,11 @@ module "kubernetes_infra" {
   service_type_port_node_port = 30201
   service_type_port_port = 80
   service_type_port_target_port = 80
+  job_name = "perl-job"
+  job_container_name = "pi"
+  job_container_image = "perl"
+  job_commands = ["perl", "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+  job_backoff_limit = 4
 }
 
 output "kubernetes_infra" {
