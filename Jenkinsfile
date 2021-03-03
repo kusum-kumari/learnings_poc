@@ -5,6 +5,7 @@ pipeline {
             steps {
                 echo 'Hello Kusum, from Jenkins!' 
             }
+        }
         stage('Stage 2') {
         	environment { 
                 DEBUG_FLAGS = '-g'
@@ -15,8 +16,6 @@ pipeline {
                 echo "NODE_NAME        ${env.NODE_NAME}     JOB_NAME    ${env.JOB_NAME}      WORKSPACE     ${env.JWORKSPACE}  "
                 sh 'printenv'
             }
-            }
-        }
         }
     }
 }
